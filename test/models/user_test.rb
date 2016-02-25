@@ -53,10 +53,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.authenticated?(:remember, '')
   end
 
-  test "associated microposts should be destroyed" do
+  test "associated entries should be destroyed" do
     @user.save
-    @user.microposts.create!(content: "Lorem ipsum")
-    assert_difference 'Micropost.count', -1 do
+    @user.entries.create!(title: "tittle", body: "Lorem ipsum")
+    assert_difference 'Entry.count', -1 do
       @user.destroy
     end
   end
@@ -77,15 +77,15 @@ class UserTest < ActiveSupport::TestCase
     archer  = users(:archer)
     lana    = users(:lana)
     # Posts from followed user
-    lana.microposts.each do |post_following|
+    lana.entries.each do |post_following|
       assert michael.feed.include?(post_following)
     end
     # Posts from self
-    michael.microposts.each do |post_self|
+    michael.entries.each do |post_self|
       assert michael.feed.include?(post_self)
     end
     # Posts from unfollowed user
-    archer.microposts.each do |post_unfollowed|
+    archer.entries.each do |post_unfollowed|
       assert_not michael.feed.include?(post_unfollowed)
     end
   end

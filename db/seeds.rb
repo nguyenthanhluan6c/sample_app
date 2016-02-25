@@ -35,7 +35,12 @@ users = User.order(:created_at).take(6)
   users.each { |user| user.microposts.create!(content: content) }
 end
 
-
+users = User.order(:created_at).take(6)
+50.times do
+  title = Faker::Lorem.sentence(5)
+  body  = Faker::Lorem.paragraphs(15)
+  users.each { |user| user.entries.create!(title: title,body: body) }
+end
 
 # Following relationships
 users = User.all
