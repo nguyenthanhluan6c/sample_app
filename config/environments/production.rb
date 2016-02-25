@@ -80,8 +80,8 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
-  domain:               'google.com',
-  user_name:            'nanofresh.vn',
+  domain:               'gmail.com',
+  user_name:            'nanofresh.vn@gmail.com',
   password:             '12345678a@',
   authentication:       'plain',
   enable_starttls_auto: true  }
