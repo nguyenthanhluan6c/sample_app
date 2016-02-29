@@ -1,3 +1,7 @@
+def rand_time(from, to=Time.now)
+  Time.at(rand(from.to_f..to.to_f))
+end
+
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -31,16 +35,22 @@ end
 
 users = User.order(:created_at).take(6)
 50.times do
-  content = Faker::Lorem.sentence(5)
-  users.each { |user| user.microposts.create!(content: content) }
-end
-
-users = User.order(:created_at).take(6)
-50.times do
-  title = Faker::Lorem.sentence(5)
-  body  = Faker::Lorem.paragraphs(15)
+  title = Faker::Lorem.sentence(rand(5..15))
+  body  = Faker::Lorem.paragraphs(rand(5..15) )
   users.each { |user| user.entries.create!(title: title,body: body) }
 end
+
+entries = Entry.order(:created_at).take(50)
+
+entries.each { |entry| 
+  rand_times = rand(30);
+  rand_times.times do
+  offset    = rand(User.count)
+  rand_user = User.offset(offset).first
+  content = Faker::Lorem.sentence(rand(5..15))
+  entry.comments.create!(user: rand_user, content: content, created_at: rand_time(15.days.ago) ) 
+  end
+}
 
 # Following relationships
 users = User.all
