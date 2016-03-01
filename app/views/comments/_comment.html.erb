@@ -7,7 +7,7 @@
   </span>
 
   <% if current_user?(comment.user) %>
-      <%= link_to "delete", comment, method: :delete,
+      <%= link_to "delete", [@entry, comment], method: :delete,
                                        data: { confirm: "You sure?" } %>
   <% end %>
 </li>

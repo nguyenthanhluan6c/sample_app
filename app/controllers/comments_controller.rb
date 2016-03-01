@@ -4,14 +4,17 @@ class CommentsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def create
+    
     @comment = current_user.comments.build(comment_params)
-    @comment.update_attributes(:entry_id => $current_entry.id)
-    #byebug
+  
+    @comment.update_attributes(:entry_id => params.require(:entry_id) )
+    
     if @comment.save
       flash[:success] = "Comment created!"
       redirect_to :controller => "entries", :action => "show", :id => $current_entry.id
     else
-     redirect_to root_url 
+      flash[:danger] = "Comment cannot blank!"
+      redirect_to :controller => "entries", :action => "show", :id => $current_entry.id
     end
   end
 
